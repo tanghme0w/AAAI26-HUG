@@ -1,0 +1,37 @@
+# HUG Model Requirements
+#
+# This project depends on LAVIS (Salesforce BLIP-2 implementation).
+# LAVIS provides a pre-configured UV environment with all required dependencies.
+#
+# Quick Start:
+# ------------
+# 1. Install LAVIS (includes UV environment with PyTorch, Transformers, etc.)
+#    cd ref/LAVIS && pip install -e .
+#
+# 2. Activate LAVIS UV environment
+#    source ref/LAVIS/.venv/bin/activate  # or: uv run --directory ref/LAVIS python train.py
+#
+# 3. Install additional HUG-specific dependencies
+#    pip install -r requirements.txt
+#
+# Alternative: Use UV run directly
+#    uv run --directory ref/LAVIS python train.py --dataset fashion-iq ...
+
+# Additional HUG-specific dependencies (not in LAVIS)
+# These are already included in the LAVIS UV environment:
+# - torch>=2.0.0
+# - torchvision>=0.15.0
+# - transformers>=4.30.0
+# - accelerate>=0.21.0
+# - pillow>=9.0.0
+# - numpy>=1.24.0
+# - tqdm>=4.65.0
+
+# Configuration and logging
+pyyaml>=6.0
+wandb>=0.15.0  # Optional: for training visualization
+
+# Development dependencies (optional)
+pytest>=7.3.0
+black>=23.3.0
+flake8>=6.0.0
