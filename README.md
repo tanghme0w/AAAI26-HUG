@@ -40,7 +40,7 @@ Reference Image + Modification Text → BLIP-2 Q-Former → K=32 Query Tokens
 
 ### Setup
 
-This project uses LAVIS (Salesforce BLIP-2 implementation) which provides a pre-configured UV environment.
+This project uses LAVIS (Salesforce BLIP-2 implementation).
 
 ```bash
 # Clone the repository
@@ -52,23 +52,8 @@ cd ref/LAVIS
 pip install -e .
 cd ..
 
-# Option 1: Activate LAVIS UV environment
-source ref/LAVIS/.venv/bin/activate
-
-# Option 2: Use UV run directly (recommended)
-# uv run --directory ref/LAVIS python train.py --dataset fashion-iq ...
-
 # Install additional HUG-specific dependencies
 pip install -r requirements.txt
-```
-
-### Alternative: UV Run
-
-You can also run scripts directly using UV without manual activation:
-
-```bash
-uv run --directory ref/LAVIS python train.py --dataset fashion-iq --data_root /path/to/fashion-iq ...
-uv run --directory ref/LAVIS python eval.py --dataset fashion-iq --data_root /path/to/fashion-iq ...
 ```
 
 ## Data Preparation
@@ -213,55 +198,9 @@ AAAI26-HUG/
 └── requirements.txt          # Dependencies
 ```
 
-## Implementation Details
-
-### Model Architecture
-
-1. **BLIP-2 Q-Former**: Frozen vision encoder + trainable Q-Former
-2. **K=32 Query Tokens**: Initialized with small random values (std=0.02)
-3. **Uncertainty Estimators**: 1-layer Transformer (4 heads, hidden_dim×4 FFN)
-4. **Activation**: Softplus for uncertainty prediction (ensures positivity)
-
-### Loss Functions
-
-#### Holistic Contrastive Loss (L_HC)
-Uses sigmoid loss with learnable parameters a and b:
-```
-L_HC = -log(σ(-a·d_pos - b)) - Σ log(σ(a·d_neg + b))
-```
-
-#### Fine-Grained Contrastive Loss (L_FC)
-Applies contrastive learning to each of K=32 Gaussians with three types of negatives:
-- Component-wise: Different k' within the same sample
-- Instance-wise: Same k from different samples
-- Modality-wise: Cross-modal negatives
-
-#### Multi-Modal Coordination Loss (L_Cord)
-Ranking loss ensuring matched pairs have lower uncertainty:
-```
-L_Cord = max(0, margin + ||σ_m(matched)||² - ||σ_m(mismatched)||²)
-```
-
-### Uncertainty-Aware Distance
-
-Distance metric (Equation 15):
-```
-d(z_q, z_c) = ||μ_q - μ_c||²_F + ||σ_q||²_F + ||σ_c||²_F
-```
-
-### Training Hyperparameters
-
-Following the paper specifications:
-- **Optimizer**: AdamW (β1=0.9, β2=0.999)
-- **Learning Rate**: 3×10⁻⁵
-- **Batch Size**: 32
-- **Loss Weights**: λ_FC=0.5, λ_Cord=0.1
-- **Scheduler**: Cosine Annealing
-- **Gradient Clipping**: Max norm = 1.0
-
 ## Citation
 
-If you use this code in your research, please cite:
+If you find this project helpful to your research, please cite:
 
 ```bibtex
 @inproceedings{hug2025,
@@ -275,9 +214,3 @@ If you use this code in your research, please cite:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- BLIP-2 model from Salesforce Research
-- Fashion-IQ dataset
-- CIRR dataset
