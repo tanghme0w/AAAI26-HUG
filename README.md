@@ -1,5 +1,5 @@
 # AAAI26-HUG
-Official Implementation for AAAI26 Oral: Heterogeneous Uncertainty-Guided Composed Image Retrieval
+Official Implementation for AAAI26 Oral: Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning
 
 ## Architecture
 
@@ -178,11 +178,11 @@ The evaluation script computes:
 If you find this project helpful to your research, please cite:
 
 ```bibtex
-@inproceedings{hug2025,
-  title={Heterogeneous Uncertainty-Guided Composed Image Retrieval},
-  author={Your Name},
+@inproceedings{hug2026,
+  title={Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning},
+  author={Tang, Haomiao and Wang, Jinpeng and Zhao, Minyi and Meng, Guanghao and Luo, Ruisheng and Chen, Long and Xia, Shu-Tao},
   booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
-  year={2025}
+  year={2026}
 }
 ```
 
